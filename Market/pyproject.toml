@@ -1,0 +1,9 @@
+# Package metadata only. This file does not make a simulation runnable.
+
+[project]
+name = "market"
+version = "0.0.0"
+description = "Project 1 simulated exchange skeleton. Implementation has not started."
+requires-python = ">=3.11"
+readme = "README.md"
+authors = [{ name = "Michael Washington" }]

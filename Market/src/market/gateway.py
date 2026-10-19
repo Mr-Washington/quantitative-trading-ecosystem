@@ -1,0 +1,3 @@
+"""Order validation."""
+
+# Not implemented.

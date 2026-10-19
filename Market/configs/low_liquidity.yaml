@@ -1,0 +1,9 @@
+# Commented keys only. Not a runnable scenario.
+# Slot for the later sparse-trading comparison.
+# No values are set. Tick size, symbol, and participant settings are open.
+
+# random_seed:
+# starting_price:
+# tick_size:
+# session_length:
+# participant_settings:
