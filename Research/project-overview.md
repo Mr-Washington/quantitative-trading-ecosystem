@@ -12,7 +12,7 @@ AI belongs in participants and in development workflows. It does not belong in t
 
 ## What Project 1 is
 
-One fictional instrument on one centralized electronic exchange, with a continuous limit order book. The simulation is small and internally consistent. It will not replicate every feature of a real exchange. Rules must be documented and testable.
+One stock, symbol `JPM`, on one centralized electronic exchange, with a continuous limit order book. The simulation is small and internally consistent. It will not replicate every feature of a real exchange. Rules must be documented and testable.
 
 Priority is correctness, observability, and extensibility. Speed and realism come after those.
 
@@ -39,7 +39,7 @@ After that, do not add many sophisticated order types. The next project is a ser
 
 ## Illustrative completion command
 
-The following is an example of a finished run. It is not a performance target, and it does not choose the instrument symbol or any market parameter.
+The following is an example of a finished run from the original brief. It is not a performance target, and it does not override the [rulebook](exchange-rulebook.md). The instrument is the stock `JPM`.
 
 - Scenario: baseline_market
 - Instrument: SIM1
@@ -48,4 +48,4 @@ The following is an example of a finished run. It is not a performance target, a
 - Participants: 1 scripted buyer, 1 scripted seller, 10 noise traders
 - Outputs: order book and trade history, participant account ledger, market data snapshots, market quality metrics, validation and replay report
 
-`SIM1` appears only in this example. The symbol is not chosen. See the [rulebook](exchange-rulebook.md).
+`SIM1` appears only in that example. It is not the symbol.

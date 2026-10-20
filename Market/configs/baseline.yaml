@@ -1,6 +1,6 @@
 # Commented keys only. Not a runnable scenario.
 # Slot for the later baseline-liquidity comparison.
-# No values are set. Tick size, symbol, and participant settings are open.
+# No scenario values are set. Symbol and tick size live in Config/, not here.
 
 # random_seed:
 # starting_price:

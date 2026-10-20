@@ -1,0 +1,20 @@
+# The session stays continuous only. Auctions are out of scope until a later review.
+session: continuous
+
+# Self-trade prevention: cancel the existing resting order.
+# The incoming taking order continues to match against other liquidity.
+self_trade_prevention: cancel_resting_order
+
+# Decreasing quantity keeps FIFO queue position.
+quantity_decrease: keep_fifo_position
+
+# Any other modification is a cancel plus a new order, so it loses time priority.
+other_modification: cancel_and_new
+
+# A repeated cancel of an unknown or already-dead order is a rejection.
+unknown_or_dead_cancel: reject
+
+# Off-tick prices and non-positive prices are rejected during order validation, before the book changes.
+# Off-tick means not a multiple of the configured tick size.
+reject_off_tick_at_validation: true
+reject_non_positive_price_at_validation: true

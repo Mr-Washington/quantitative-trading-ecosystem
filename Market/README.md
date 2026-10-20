@@ -2,7 +2,7 @@
 
 Proposed layout for the Project 1 exchange. This is a starting tree, not a rigid rule and not a working system.
 
-Code waits on rulebook review. Read [the exchange rulebook](../Research/exchange-rulebook.md) first. Open questions there are not decided, so matching, accounts, and the scheduler are not implemented. Every Python module names a future responsibility and stops.
+Code waits on rulebook review. Read [the exchange rulebook](../Research/exchange-rulebook.md) first. Matching, accounts, validation, and LULD are not implemented, including the rules that are already decided. Every Python module names a future responsibility and stops. Project defaults live in [Config](../Config/README.md). The engine does not read them yet.
 
 Nothing here runs a simulation.
 

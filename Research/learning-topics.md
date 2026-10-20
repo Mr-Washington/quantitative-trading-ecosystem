@@ -6,7 +6,7 @@ Study notes for Project 1. None of this is implemented code.
 
 Bid, ask, spread, limit versus market, partial fills, price-time priority, depth, tick size, liquidity, slippage, and market impact.
 
-The baseline rules that fix some of these words are in the [rulebook](exchange-rulebook.md). Tick size is still an open question. Slippage and market impact are concepts to study, not measured behaviors of this exchange yet.
+The baseline rules that fix some of these words are in the [rulebook](exchange-rulebook.md). Tick size defaults to 1 and is configurable. Slippage and market impact are concepts to study, not measured behaviors of this exchange yet.
 
 ## Order-book structures
 
@@ -24,9 +24,9 @@ Practical check: two traders at specified times, and the replay is identical.
 
 Cash and position ledgers, buyer and seller accounting, reservations and buying power, and realized versus unrealized P&L.
 
-A trade decreases buyer cash and increases buyer holdings. It increases seller cash and decreases seller holdings. That statement is before fees. Fees and rebates are deferred. Inventory and position limits are deferred.
+A trade decreases buyer cash and increases buyer holdings. It increases seller cash and decreases seller holdings. That statement is before fees. Fees and position limits are deferred. When they are set, they are configurable and aligned with NYSE. No schedule is chosen.
 
-Open orders affect what a participant may submit next. The buying-power formula and the reservation rule are open questions.
+The account is a cash account. Buying power is 1:1 with equity, and there is no margin. Short sales are not represented. Equity's exact composition, and how reserved funds are calculated, are still open. Open orders affect what a participant may submit next.
 
 ## Market data
 

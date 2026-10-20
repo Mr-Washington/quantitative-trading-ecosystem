@@ -1,0 +1,16 @@
+# Instrument rule: one stock. The symbol is JPM.
+style: stock
+symbol: JPM
+
+# Prices are integer ticks. Tick size defaults to 1 and is configurable.
+tick_size: 1
+
+# Price bands use limit-up limit-down (LULD). Each default below is configurable.
+luld:
+  enabled: true
+  # Limit-state length. What happens when the limit state ends and trading resumes is not decided.
+  limit_state_seconds: 15
+  # Reference price: a rolling average over this window.
+  reference_window_minutes: 5
+  # Band width. How this percent rounds onto integer ticks is not specified.
+  band_percent: 5

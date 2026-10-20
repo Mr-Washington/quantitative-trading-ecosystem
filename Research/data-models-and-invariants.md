@@ -42,7 +42,7 @@ The baseline execution price is the resting order's price.
 - Reserved funds
 - Open orders
 
-How reserved funds are calculated is an open question.
+The account is a cash account. Buying power is 1:1 with equity, and there is no margin. How reserved funds are calculated is still open. Equity's exact composition is not specified.
 
 ### MarketEvent
 
@@ -70,7 +70,7 @@ The explicit event types are `SubmitOrder`, `CancelOrder`, `OrderAccepted`, `Ord
 - Session length
 - Participant settings
 
-Tick size, the symbol, and the participant settings are not given values. Configuration files under Market keep these as comments only.
+The symbol is `JPM`. Tick size defaults to 1 and is configurable. Participant settings are not given values. Scenario files under `Market/configs/` stay comments only. Project defaults are in `Config/`.
 
 ## Invariants future tests must enforce
 

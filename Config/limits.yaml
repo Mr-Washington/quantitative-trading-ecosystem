@@ -1,0 +1,7 @@
+# Minimum and maximum quantity are configurable parameters.
+# No values have been chosen.
+min_quantity:
+max_quantity:
+
+# Fees and position limits will be configurable and aligned with NYSE.
+# They are not set. No NYSE fee table is copied here.

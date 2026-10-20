@@ -14,3 +14,4 @@ Read the [exchange rulebook](exchange-rulebook.md) before writing matching or ac
 | [Data models and invariants](data-models-and-invariants.md) | Starting entities, fields, and the checks future tests must enforce |
 | [Metrics and experiments](metrics-and-experiments.md) | Measurements and comparisons to add after the engine exists |
 | [References](references.md) | Nasdaq Equity 4, the ABIDES repository, and the ABIDES paper |
+| [Possible improvements](possible-improvements.md) | Later work that is not a v1 rule |

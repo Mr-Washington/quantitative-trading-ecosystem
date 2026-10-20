@@ -1,0 +1,9 @@
+# Cash account. No margin.
+account_type: cash
+
+# Buying power is 1:1 with equity.
+# Equity's exact composition is not specified. No mark-to-market formula is stated.
+buying_power_ratio: 1
+
+# Short sales are not represented. There are no brokers to borrow shares.
+short_sales: false
