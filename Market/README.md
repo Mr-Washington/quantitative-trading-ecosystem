@@ -1,10 +1,10 @@
 # Market
 
-Proposed layout for the Project 1 exchange. This is a starting tree, not a rigid rule and not a working system.
+Proposed layout for the Project 1 exchange. This is a starting tree, not a rigid rule.
 
-Code waits on rulebook review. Read [the exchange rulebook](../Research/exchange-rulebook.md) first. Matching, accounts, validation, and LULD are not implemented, including the rules that are already decided. Every Python module names a future responsibility and stops. Project defaults live in [Config](../Config/README.md). The engine does not read them yet.
+Milestone 2 is implemented: resting limit order book in `src/market/order_book.py` with shared types in `src/market/models.py`. Matching, accounts, validation, LULD, and the rest remain stubs. Read [the exchange rulebook](../Research/exchange-rulebook.md) before extending behavior. Project defaults live in [Config](../Config/README.md). The engine does not read them yet.
 
-Nothing here runs a simulation.
+Nothing here runs a full simulation yet.
 
 ## Layout
 
