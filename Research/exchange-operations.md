@@ -89,10 +89,11 @@ Decided matching rules:
 - Full fills, partial fills, and multiple counterparties are in scope.
 - Execution price is the resting order's price.
 - A buy limit trades with resting sells at or below the buyer's limit. A sell limit trades with resting buys at or above the seller's limit.
+- A market buy trades with any resting sell. A market sell trades with any resting bid. The order walks the opposite book in price-time priority until filled or liquidity is exhausted. Portions may execute at different resting prices. Market orders never rest.
 - Better price first. Higher bid is better. Lower ask is better. At the same price, earlier arrival ranks first.
 - Self-trade prevention cancels the resting order. The incoming taking order continues against other liquidity.
 
-Which resting orders a market order may hit is open. Limit eligibility is decided. An unfilled market residual is cancelled and does not rest, regardless.
+An unfilled market residual is cancelled and does not rest.
 
 ### Order book
 

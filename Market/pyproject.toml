@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "market"
 version = "0.1.0"
-description = "Project 1 simulated exchange. Milestone 2: resting order book."
+description = "Project 1 simulated exchange. Resting order book and limit matching."
 requires-python = ">=3.11"
 readme = "README.md"
 authors = [{ name = "Michael Washington" }]

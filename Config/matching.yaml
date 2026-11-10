@@ -1,6 +1,11 @@
 # The session stays continuous only. Auctions are out of scope until a later review.
 session: continuous
 
+# Market orders walk opposite liquidity in price-time priority.
+# Portions may execute at different resting prices. They never rest.
+market_order: walk_book_price_time
+market_order_rests: false
+
 # Self-trade prevention: cancel the existing resting order.
 # The incoming taking order continues to match against other liquidity.
 self_trade_prevention: cancel_resting_order

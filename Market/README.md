@@ -2,7 +2,7 @@
 
 Proposed layout for the Project 1 exchange. This is a starting tree, not a rigid rule.
 
-Milestone 2 is implemented: resting limit order book in `src/market/order_book.py` with shared types in `src/market/models.py`. Matching, accounts, validation, LULD, and the rest remain stubs. Read [the exchange rulebook](../Research/exchange-rulebook.md) before extending behavior. Project defaults live in [Config](../Config/README.md). The engine does not read them yet.
+Milestone 2 and matching (milestone 3) are implemented: `src/market/order_book.py`, `src/market/models.py`, and `src/market/matching_engine.py`. Limit and market orders both use price-time priority; market orders never rest. Accounts, validation, LULD, and the rest remain stubs. Read [the exchange rulebook](../Research/exchange-rulebook.md) before extending behavior. Project defaults live in [Config](../Config/README.md). The engine does not read them yet.
 
 Nothing here runs a full simulation yet.
 

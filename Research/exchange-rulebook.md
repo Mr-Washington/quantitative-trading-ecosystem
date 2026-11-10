@@ -14,7 +14,9 @@ Validation rejects an off-tick price and a non-positive price before the book ch
 
 The incoming order matches eligible opposite-side orders until it cannot match further. A match may be a full fill, a partial fill, or a trade against more than one counterparty. The execution price is the resting order's price.
 
-A buy limit may trade with a resting sell at or below the buyer's limit. A sell limit may trade with a resting buy at or above the seller's limit. Among eligible resting orders, a better price takes precedence. At the same price, the earlier arrival ranks first. On the bid side a higher price is better. On the ask side a lower price is better.
+A buy limit may trade with a resting sell at or below the buyer's limit. A sell limit may trade with a resting buy at or above the seller's limit. A market buy may trade with any resting sell. A market sell may trade with any resting bid. Among eligible resting orders, a better price takes precedence. At the same price, the earlier arrival ranks first. On the bid side a higher price is better. On the ask side a lower price is better.
+
+A market order walks the opposite book in that price-time order until its remaining quantity is gone or opposite liquidity is exhausted. Portions of one market order may execute at different resting prices. Each execution price is still the resting order's price. Market orders are never added to the book.
 
 If the incoming taking order would trade with that participant's own resting order, self-trade prevention cancels the resting order. The incoming order then continues to match against other liquidity.
 
@@ -30,7 +32,7 @@ The account is a cash account. Buying power is 1:1 with equity, and there is no 
 
 The instrument is the stock `JPM`. Prices are integer ticks. Tick size defaults to 1 and is configurable. Price bands use limit-up limit-down. The limit-state length, reference window, and band width have defaults. What happens when a limit state ends is not decided, so this walkthrough states no resume action.
 
-The remaining gaps are the [open questions](#open-questions). In particular, which resting orders a market order may hit is not decided.
+The remaining gaps are the [open questions](#open-questions).
 
 ## Rules already decided
 
@@ -86,6 +88,8 @@ No invalid order changes the book.
 - Execution price, in this baseline, is the resting order's price.
 - A buy limit may trade with a resting sell at or below the buyer's limit.
 - A sell limit may trade with a resting buy at or above the seller's limit.
+- A market buy may trade with any resting sell. A market sell may trade with any resting bid.
+- A market order walks opposite liquidity in price-time priority until filled or liquidity is exhausted. Portions may execute at different resting prices. Market orders never rest.
 - A better price takes precedence. A higher bid is better than a lower bid. A lower ask is better than a higher ask.
 - At the same price, earlier arrival ranks first.
 - Self-trade prevention cancels the existing resting order. The incoming taking order continues to match against other liquidity.
@@ -150,7 +154,6 @@ Latency is named only as a later study topic. No latency model is deferred into 
 Do not answer these in code unless Michael decides them.
 
 - Which labels the status enumeration uses. The rules require an enumeration and do not name the values.
-- Which resting orders a market order may hit. Limit eligibility is decided. A market order is only required to match until it cannot match further, and any unfilled remainder is cancelled rather than rested.
 - Whether `OrderAccepted` is published before `TradeExecuted`. The valid path publishes events after matching, the residual rule, and the account update. The invalid path rejects. The relative order of the valid-path events is not fixed.
 - Identifier format. Orders, trades, events, and participants have IDs. How those IDs are formed is not chosen.
 - Equity's exact composition. Buying power is 1:1 with equity, and no mark-to-market formula is stated.

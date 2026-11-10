@@ -12,6 +12,7 @@ from typing import NewType
 
 OrderId = NewType("OrderId", int)
 ParticipantId = NewType("ParticipantId", int)
+TradeId = NewType("TradeId", int)
 
 
 class Side(Enum):
@@ -42,3 +43,15 @@ class Order:
     executed_quantity: int
     remaining_quantity: int
     arrival_sequence: int
+
+
+@dataclass(frozen=True)
+class Trade:
+    """One execution. Price is the resting order's price."""
+
+    trade_id: TradeId
+    resting_order_id: OrderId
+    incoming_order_id: OrderId
+    execution_price: int
+    quantity: int
+    simulated_timestamp: int

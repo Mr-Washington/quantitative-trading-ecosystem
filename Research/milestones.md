@@ -6,7 +6,7 @@ Component placement: [architecture.md](architecture.md). Order lifecycle: [excha
 
 1. **Write the exchange rulebook.** A reader can predict the exchange's behavior on a defined order sequence. That document is [exchange-rulebook.md](exchange-rulebook.md). Unanswered items stay listed there as open questions.
 2. **Order book only.** Done. No execution. Add, find, cancel, reduce quantity, and report best bid and ask. Structure and APIs: [order book structure](data-models-and-invariants.md#order-book-structure). Code: `Market/src/market/order_book.py`.
-3. **Matching engine.** Hand-calculated scenarios match the expected trades and the remaining book. Valid-path match and residual steps: [exchange operations](exchange-operations.md).
+3. **Matching engine.** Done. Hand-calculated scenarios match the expected trades and the remaining book for limit and market orders. Valid-path match and residual steps: [exchange operations](exchange-operations.md). Code: `Market/src/market/matching_engine.py`. Market orders walk opposite liquidity in price-time priority, may fill at several resting prices, and never rest.
 4. **Gateway and account ledger.** No invalid order changes the book. Balances and positions reconcile to the trade ledger. Fees and position limits come after accounting is correct. They will be configurable and NYSE-aligned. No values are chosen. Validation and account steps: [exchange operations](exchange-operations.md).
 5. **Simulation controller.** The same configuration, seed, and initial conditions reproduce the same event history and final state.
 6. **Market data feed and replay.** Start with complete snapshots. Add incremental updates only if needed. A consumer can rebuild the book from a snapshot plus updates.

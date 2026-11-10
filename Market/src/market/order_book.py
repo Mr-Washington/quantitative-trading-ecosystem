@@ -1,6 +1,6 @@
 """Bids, asks, and price levels.
 
-Milestone 2: resting limit book only. No matching or trade creation.
+The book stores resting limit orders. It does not decide which orders trade.
 """
 
 from __future__ import annotations
@@ -104,6 +104,37 @@ class OrderBook:
         order.remaining_quantity = new_remaining
         order.original_quantity -= delta
         return order
+
+    def apply_fill(self, order_id: OrderId, quantity: int) -> Order:
+        """Decrease remaining quantity by a fill. Does not change time priority.
+
+        A fill that consumes the remaining quantity removes the order from the book.
+        Original quantity stays unchanged.
+        """
+        order = self._orders_by_id.get(order_id)
+        if order is None:
+            raise OrderNotFoundError(f"order {order_id} is unknown or already dead")
+        if quantity <= 0:
+            raise InvalidQuantityError("fill quantity must be positive")
+        if quantity > order.remaining_quantity:
+            raise InvalidQuantityError("fill quantity exceeds remaining quantity")
+
+        order.remaining_quantity -= quantity
+        order.executed_quantity += quantity
+        if order.remaining_quantity == 0:
+            self._remove_from_level(order)
+            del self._orders_by_id[order_id]
+        return order
+
+    def best_resting(self, side: Side) -> Order | None:
+        """Earliest order at the best price on one side."""
+        price = self.best_bid() if side is Side.BUY else self.best_ask()
+        if price is None:
+            return None
+        queue = self._levels_for(side).get(price)
+        if not queue:
+            return None
+        return self._orders_by_id[queue[0]]
 
     def get(self, order_id: OrderId) -> Order | None:
         return self._orders_by_id.get(order_id)
