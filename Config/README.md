@@ -12,3 +12,4 @@ The values here record rules from the [exchange rulebook](../Research/exchange-r
 | [accounts.yaml](accounts.yaml) | Cash account, buying power, and no short sales |
 | [matching.yaml](matching.yaml) | Continuous session, self-trade prevention, modification, and validation rejections |
 | [limits.yaml](limits.yaml) | Minimum and maximum quantity, left unset |
+| [aws.yaml](aws.yaml) | Commented stubs for a future AWS layout (region, edge, matcher, stream). No account IDs. Not used yet |

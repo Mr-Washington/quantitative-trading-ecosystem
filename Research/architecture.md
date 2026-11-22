@@ -71,3 +71,5 @@ Authority rules that follow from this map:
 - The clock is a discrete-event simulated clock, not wall-clock polling.
 
 How those pieces are built is the milestone plan, not this skeleton. Module files under [Market](../Market/README.md) name a future responsibility and contain no behavior.
+
+A later AWS deployment shape (single primary matcher per instrument, edge validation, stream-backed market data) is sketched in [aws-architecture.md](aws-architecture.md). Phases after the eight local milestones are in [future-milestones.md](future-milestones.md).

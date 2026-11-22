@@ -12,6 +12,8 @@ Read the [exchange rulebook](exchange-rulebook.md) before writing matching or ac
 | [Exchange rulebook](exchange-rulebook.md) | Decided behavior, v1 prohibitions, deferred work, and open questions |
 | [Learning topics](learning-topics.md) | Study notes for microstructure, the book, time, accounts, data, and tests |
 | [Milestones](milestones.md) | The build order. Plan only |
+| [Future milestones](future-milestones.md) | Phases after the eight local milestones (Project 1b+); local engine stays the correctness reference |
+| [AWS architecture](aws-architecture.md) | Future AWS shape for reliability and scale; single primary matcher per instrument; low-latency defaults |
 | [Data models and invariants](data-models-and-invariants.md) | Starting entities, order book structure, fields, and the checks future tests must enforce |
 | [Metrics and experiments](metrics-and-experiments.md) | Measurements and comparisons to add after the engine exists |
 | [References](references.md) | Nasdaq Equity 4, the ABIDES repository, and the ABIDES paper |

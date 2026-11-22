@@ -18,3 +18,4 @@ Already implied by the docs, and still explicitly not in v1:
 - Optimizing for speed before correctness.
 - Market-maker or execution agents. Those belong to the next project, not Project 1.
 - A latency model. Latency is a later study topic, and no latency rule is decided.
+- AWS hosting for reliability and scale. Planning only: [aws-architecture.md](aws-architecture.md) and [future-milestones.md](future-milestones.md). The local discrete-event engine remains the correctness reference before any cutover.

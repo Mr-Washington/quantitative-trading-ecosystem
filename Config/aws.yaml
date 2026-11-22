@@ -1,0 +1,15 @@
+# Future AWS settings (stubs only). Not read by the engine.
+# Do not put account IDs, secrets, or ARNs here until a real environment exists.
+# See Research/aws-architecture.md.
+
+# aws_region: us-east-1
+# deployment_stage: local  # local | staging | prod — prod not in use
+# matcher_shard_mode: single_instrument  # single_instrument | partition_by_symbol
+# edge_protocol: grpc  # grpc | tcp | rest_admin_only
+# load_balancer: nlb
+# matcher_compute: ecs_fargate  # ecs_fargate | eks | ec2 — not lambda for hot path
+# event_stream: msk  # msk | kinesis
+# ledger_store: aurora_postgres  # aurora_postgres | dynamodb | in_process_async_persist
+# market_data_cache: elasticache_redis
+# event_archive: s3
+# observability: cloudwatch_otel  # sample xray heavily if enabled

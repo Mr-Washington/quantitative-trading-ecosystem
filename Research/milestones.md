@@ -2,7 +2,7 @@
 
 Plan only. Do not implement the exchange from this document. Each milestone is done only when its completion line is true.
 
-Component placement: [architecture.md](architecture.md). Order lifecycle: [exchange-operations.md](exchange-operations.md). Book structure: [data-models-and-invariants.md](data-models-and-invariants.md#order-book-structure).
+Component placement: [architecture.md](architecture.md). Order lifecycle: [exchange-operations.md](exchange-operations.md). Book structure: [data-models-and-invariants.md](data-models-and-invariants.md#order-book-structure). Phases after these eight local milestones: [future-milestones.md](future-milestones.md).
 
 1. **Write the exchange rulebook.** A reader can predict the exchange's behavior on a defined order sequence. That document is [exchange-rulebook.md](exchange-rulebook.md). Unanswered items stay listed there as open questions.
 2. **Order book only.** Done. No execution. Add, find, cancel, reduce quantity, and report best bid and ask. Structure and APIs: [order book structure](data-models-and-invariants.md#order-book-structure). Code: `Market/src/market/order_book.py`.
