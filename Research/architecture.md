@@ -16,8 +16,8 @@ flowchart LR
     Sched[Scheduler]
     Runner[Runner]
   end
-  Participants --> Sched
-  Sched -->|"SubmitOrder / CancelOrder"| Gateway
+  Sched -->|"wake"| Participants
+  Participants -->|"SubmitOrder / CancelOrder"| Gateway
   Gateway -->|"valid"| MatchingEngine
   Gateway -->|"invalid"| EventLog
   MatchingEngine <--> OrderBook
@@ -26,6 +26,8 @@ flowchart LR
   EventLog --> MarketData
   MarketData --> Participants
 ```
+
+The controller sends **wake** commands; participants decide orders and submit through the gateway. Scripted scenarios may still enqueue `SubmitOrder` / `CancelOrder` directly on the scheduler. Same-timestamp wake order uses a seeded random permute; each woken participant's submits/cancels are applied before the next wake. Details: [scheduler and runner](exchange-operations.md#scheduler-and-runner).
 
 ## Components
 
@@ -37,7 +39,7 @@ flowchart LR
 | Order book | Resting bids and asks |
 | Account ledger | Cash, holdings, and fills |
 | Market data and event log | Quotes, depth updates, trades, replay, and metrics |
-| Simulation controller | Schedule events, control simulated time, and coordinate participants |
+| Simulation controller | Schedule events, control simulated time, send wake commands, and coordinate participants |
 
 ## Component ownership
 

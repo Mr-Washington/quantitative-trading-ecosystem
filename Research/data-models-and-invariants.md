@@ -56,7 +56,7 @@ The account is a cash account. Buying power is 1:1 with equity, and there is no 
 - Sequence number
 - Payload
 
-The explicit event types are `SubmitOrder`, `CancelOrder`, `OrderAccepted`, `OrderRejected`, and `TradeExecuted`.
+The explicit exchange event types are `SubmitOrder`, `CancelOrder`, `OrderAccepted`, `OrderRejected`, and `TradeExecuted`. Controller **wake** commands coordinate participants on the simulated clock; they are not exchange book events.
 
 ### MarketSnapshot
 
@@ -162,6 +162,6 @@ Also required later, still without specified cases:
 - Empty books
 - Repeated cancellation requests
 - Multiple orders at one price
-- Simultaneous events with identical simulated timestamps
+- Simultaneous events with identical simulated timestamps (decided policy: seeded random permute of participant wakes; apply that wake's submits/cancels before the next same-`t` wake — see [scheduler and runner](exchange-operations.md#scheduler-and-runner))
 
 The test modules in `Market/tests/` name the invariant they will protect. They do not contain tests yet.

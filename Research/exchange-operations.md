@@ -130,9 +130,15 @@ Replay of the same inputs must reproduce the same final state. Same configuratio
 
 ### Scheduler and runner
 
-**Does:** hold a priority queue ordered by simulated timestamp, then a deterministic sequence number; advance the clock to the next event; coordinate participants with the exchange path.
+**Does:** hold a priority queue ordered by simulated timestamp, then a deterministic sequence number; advance the clock to the next event; send **wake** commands to participants; coordinate their resulting `SubmitOrder` / `CancelOrder` with the exchange path.
 
-**Must not:** poll wall-clock time as the exchange clock; conflate simulated timestamps with real processing timestamps.
+**Same-timestamp participant wakes (decided):**
+
+- When more than one participant is due at the same simulated timestamp, the controller builds the wake order with a **seeded random permute** of those participants (derived from the run seed). The same seed reproduces the same permute and thus the same event history.
+- For each wake in that order: the participant may submit or cancel; those requests are validated and applied on the exchange path **before** the next participant at that timestamp is woken. Later same-`t` agents therefore see the book effects of earlier wakes.
+- Sequence numbers still totally order the queue after the permute assigns wake (and follow-on submit/cancel) events. Agents do not own the clock; they only react when woken and may schedule a future wake.
+
+**Must not:** poll wall-clock time as the exchange clock; conflate simulated timestamps with real processing timestamps; wake the next same-`t` agent before the current agent's submits/cancels have been applied.
 
 ## Cancel path
 

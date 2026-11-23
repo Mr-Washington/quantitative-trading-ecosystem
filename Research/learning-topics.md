@@ -16,9 +16,9 @@ Practical check: several orders at one price, a partial fill, cancel one order, 
 
 ## Event-driven simulation
 
-Event queue, simulated time versus wall clock, timestamps, sequence numbers, causal order, and seeded random number generators. Latency is a later topic. No latency rule is decided.
+Event queue, simulated time versus wall clock, timestamps, sequence numbers, causal order, and seeded random number generators. Same-timestamp participant wakes use a seeded random permute; orders from a wake apply before the next wake. Latency is a later topic. No latency rule is decided.
 
-Practical check: two traders at specified times, and the replay is identical.
+Practical check: two traders at the same simulated time under one seed replay identically; a second seed may change wake order and outcomes.
 
 ## Accounts
 

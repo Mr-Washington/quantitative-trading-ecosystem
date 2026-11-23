@@ -67,7 +67,9 @@ The remaining gaps are the [open questions](#open-questions).
 - The scheduler is a priority queue ordered by simulated timestamp, then a deterministic sequence number.
 - The clock advances to the next event.
 - Simulated timestamps stay separate from real processing timestamps.
-- The explicit events are `SubmitOrder`, `CancelOrder`, `OrderAccepted`, `OrderRejected`, and `TradeExecuted`.
+- The controller sends **wake** commands to participants. Participants decide whether to submit or cancel; they do not advance the clock.
+- When multiple participants are due at the same simulated timestamp, wake order is a **seeded random permute** of those participants. Orders and cancels from a wake are applied before the next wake at that timestamp.
+- The explicit exchange events are `SubmitOrder`, `CancelOrder`, `OrderAccepted`, `OrderRejected`, and `TradeExecuted`.
 
 ### Lifecycle
 

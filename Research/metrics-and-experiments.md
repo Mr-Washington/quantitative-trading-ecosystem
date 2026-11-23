@@ -38,12 +38,22 @@ Real processing latency is recorded separately from simulated time. That separat
 
 Stress coverage, when diagnostics exist, adds heavy submission, cancellation bursts, repeated partial fills, price shocks, and low liquidity. Profile before optimizing.
 
+## Strategy evaluation across seeds
+
+A single seed fixes wake permute and other RNG draws, so one run is replayable but not enough to rank strategies. Future experiment harnesses should:
+
+- Sweep **many seeds** under the same configuration and scenario
+- Report a **distribution of P&amp;L** (and supporting order/market metrics) per strategy
+- Keep each individual run fully replayable from its stored seed
+
+Same-timestamp agent wake order is a seeded random permute (milestone 5); multi-seed spreads are how strategy comparison stays honest about that randomness.
+
 ## What each experiment stores
 
 - Configuration
-- Random seed
+- Random seed (per run; the sweep records the seed set)
 - Software version
 - Event log
-- Summary metrics
+- Summary metrics (per run; aggregate distribution across the seed sweep)
 
 A named scenario must be runnable, inspectable, replayable, and explainable once that milestone is reached. Changing a parameter must change behavior in an explainable way.

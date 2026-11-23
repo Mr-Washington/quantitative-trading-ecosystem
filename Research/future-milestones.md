@@ -13,7 +13,7 @@ Continue and finish [milestones.md](milestones.md) 1–8 first: rulebook, order 
 Bridge between “exchange works locally” and “ready to think about cloud.”
 
 1. **Invariant and replay gate.** Named scenarios replay to identical final state. Accounting, book, and matching invariants hold under stress from milestone 8.
-2. **Richer simulation controller.** Many participants with different strategies in one local run (interfaces and configs first; strategies may still be scripted). Controller injects `SubmitOrder` / `CancelOrder` on the simulated clock; agents do not own the clock.
+2. **Richer simulation controller.** Many participants with different strategies in one local run (interfaces and configs first; strategies may still be scripted). Controller sends **wake** commands on the simulated clock; agents submit/cancel through the gateway and do not own the clock. Same-timestamp wakes use the seeded random permute and submit-before-next-wake rules from milestone 5.
 3. **Clear process boundaries.** Document which components could become separate processes later (gateway, matcher, ledger persist, market-data publisher, agents) without changing rules. Still local; no AWS required.
 4. **Latency measurement hooks.** Record wall-clock processing latency separately from simulated time (study topic only; no latency model in the rulebook yet).
 
@@ -24,10 +24,10 @@ Done when: a multi-strategy local scenario runs, replays, and explains itself; b
 Aligns with the ecosystem intent: after the exchange is explainable, build participants whose behavior can be investigated.
 
 1. **Market-maker and/or execution-style agents** with documented policies (not LLM-in-the-matcher).
-2. **Experiment harness** for comparing strategies under shared seeds and configs ([metrics-and-experiments.md](metrics-and-experiments.md)).
+2. **Experiment harness** for comparing strategies under shared seeds and configs ([metrics-and-experiments.md](metrics-and-experiments.md)). Run a **spread of seeds** and report a **distribution of P&amp;L** (and related metrics), not a single-run score, so same-timestamp wake permute and other seeded randomness do not masquerade as model quality.
 3. **Optional AI in the participant layer only** — research workflows and strategy search, never inside matching.
 
-Done when: agent P&amp;L and behavior can be separated from exchange bugs using the same replay tools as Project 1.
+Done when: agent P&amp;L distributions and behavior can be separated from exchange bugs using the same replay tools as Project 1.
 
 AWS is still optional here. Prefer keeping agents on the local engine until Project 1b gates pass.
 

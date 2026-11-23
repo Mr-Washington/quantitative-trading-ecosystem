@@ -51,8 +51,8 @@ flowchart TB
   S3[S3 durable archive]
   Obs[CloudWatch + OTel sampled X-Ray]
 
-  Ctrl -->|"SubmitOrder / CancelOrder ticks"| Agents
-  Agents --> Edge
+  Ctrl -->|"wake"| Agents
+  Agents -->|"SubmitOrder / CancelOrder"| Edge
   Edge -->|"validated"| Match
   Edge -->|"rejects"| Bus
   Match --> Ledger
@@ -69,11 +69,12 @@ flowchart TB
 
 Order path (hot):
 
-1. Simulation controller (or live clients later) injects `SubmitOrder` / `CancelOrder` toward agents or directly at the gateway.
-2. **Edge / gateway** validates shape, tick, quantity bounds, and other rulebook checks that do not need the live book; assigns IDs where appropriate; rejects without touching the matcher when possible.
-3. Valid requests go to the **single active matcher** for that instrument. Matcher owns the in-memory order book, matches price-time, applies residual rules and self-trade prevention per the [exchange rulebook](exchange-rulebook.md).
-4. Matcher updates accounts (in-process synchronously for latency, or a tightly coupled ledger service) and emits events to the **event log stream**.
-5. Market data consumers read BBO/depth from Redis and/or stream consumers; durable replay from the stream + S3 archive + periodic snapshots.
+1. Simulation controller advances simulated time and sends **wake** commands to agents (or, for scripted scenarios, submits `SubmitOrder` / `CancelOrder` directly at the gateway). Live clients later bypass the controller and talk to the gateway.
+2. A woken agent decides whether to act. Any `SubmitOrder` / `CancelOrder` it produces is applied through the gateway **before** the controller wakes the next agent at the same simulated timestamp.
+3. **Edge / gateway** validates shape, tick, quantity bounds, and other rulebook checks that do not need the live book; assigns IDs where appropriate; rejects without touching the matcher when possible.
+4. Valid requests go to the **single active matcher** for that instrument. Matcher owns the in-memory order book, matches price-time, applies residual rules and self-trade prevention per the [exchange rulebook](exchange-rulebook.md).
+5. Matcher updates accounts (in-process synchronously for latency, or a tightly coupled ledger service) and emits events to the **event log stream**.
+6. Market data consumers read BBO/depth from Redis and/or stream consumers; durable replay from the stream + S3 archive + periodic snapshots.
 
 ## Component mapping to AWS
 
@@ -129,16 +130,17 @@ Publish from the matcher after each accepted mutation: `OrderAccepted`, `OrderRe
 
 ### Simulation controller / multi-strategy agents
 
-Refine the controller so many agents with different strategies can participate without sharing process memory.
+Refine the controller so many agents with different strategies can participate without sharing process memory. Agents decide *what* to trade; the controller alone owns simulated time and wake order. Same-timestamp wake policy matches the local [simulation controller milestone](milestones.md) and [scheduler rules](exchange-operations.md#scheduler-and-runner).
 
 | Piece | Default | Alternative |
 | --- | --- | --- |
 | Agent runtime | **ECS tasks or EKS pods per agent (or per strategy class)** | One process with plugin strategies (simpler, less isolation) |
-| Discrete-event ticks | **Central scheduler service** injecting `SubmitOrder` / `CancelOrder` | EventBridge Scheduler for coarse wall-clock jobs (poor fit for fine simulated time) |
-| Controller ↔ agents | **MSK (or SQS) message bus** | Direct gRPC from controller (tighter coupling) |
+| Discrete-event clock | **Central scheduler** sending **wake** commands; agents then submit/cancel via the gateway | EventBridge Scheduler for coarse wall-clock jobs (poor fit for fine simulated time) |
+| Same-timestamp wakes | **Seeded random permute** of eligible agents; orders from a wake applied before the next wake | Fixed agent-ID order (simpler, biased for strategy bake-offs) |
+| Controller ↔ agents | **MSK (or SQS) message bus** (wake / schedule-next-wake) | Direct gRPC from controller (tighter coupling) |
 | Agent → exchange | Through the **same gateway** as any participant | Bypass gateway only in local tests |
 
-EventBridge is useful for *ops* schedules (start scenario, stop run), not as the microsecond/millisecond matching clock. Simulated time stays under a dedicated controller, as in the local design.
+EventBridge is useful for *ops* schedules (start scenario, stop run), not as the microsecond/millisecond matching clock. Simulated time stays under a dedicated controller, as in the local design. Strategy evaluation across many seeds and P&L distributions is experiment-harness work ([metrics-and-experiments.md](metrics-and-experiments.md)), not a change to the wake protocol.
 
 ### Observability
 
